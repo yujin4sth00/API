@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Kakao 지도 시작하기</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+body {margin: 0}    
+#map {
+    height: 100vh; /* viewport height */
+}    
+
+</style>
+</head>
+<body>
+
+<div id="map">
+    <ul class="zoom">
+        <li><i class="bi bi-plus-lg"></i></li>
+        <li><i class="bi bi-dash-lg"></i></li>
+    </ul>
+</div>
+
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a43eae193dd9a35ef28e4466d84ee1b"></script>
+<script>
+const container = document.querySelector('#map');
+let options = {
+    center: new kakao.maps.LatLng(37.558450, 127.048876),
+    level: 3
+};
+
+const map = new kakao.maps.Map(container, options);
+
+const marker = new kakao.maps.Marker({ 
+    map: map,
+    // 지도 중심좌표에 마커를 생성합니다 
+    position: map.getCenter() 
+}); 
+// 지도에 마커를 표시합니다 -> map:map, 을 사용하면 사용할 필요 없음(같은 결과화면 나옴)
+//marker.setMap(map); 
+
+kakao.maps.event.addListener(map, 'click', function(evt) {        
+    // console.log(evt.latLng.getLat(), evt.latLng.getLng()); //WGS84 좌표 정보를 가지고 있는 객테를 생성
+    let latlng = evt.latLng;
+    //map.setCenter(latlng); //이미지 지도의 중심 좌표를 설정
+    map.panTo(latlng);//중심 좌표를 지정한 곳으로 부드럽게 이동
+    marker.setPosition(latlng); //지정한 곳으로 마커를 표시해줌
+});
+</script>
+</body>
+</html>

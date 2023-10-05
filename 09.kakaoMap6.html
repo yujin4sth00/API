@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Kakao 지도 시작하기</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+body {margin: 0}    
+#map {
+    height: 100vh; /* viewport height */
+}    
+
+</style>
+</head>
+<body>
+
+<div id="map">
+    <ul class="zoom">
+        <li><i class="bi bi-plus-lg"></i></li>
+        <li><i class="bi bi-dash-lg"></i></li>
+    </ul>
+</div>
+
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a43eae193dd9a35ef28e4466d84ee1b"></script>
+<script>
+const container = document.querySelector('#map');
+let options = {
+    center: new kakao.maps.LatLng(37.558450, 127.048876),
+    level: 3
+};
+
+const map = new kakao.maps.Map(container, options);
+
+let idx = 0;
+kakao.maps.event.addListener(map, 'click', function(evt) {        
+    let latlng = evt.latLng;
+    let marker = new kakao.maps.Marker({ 
+        map: map,
+        position: latlng,
+        title: idx+'번째',
+        clickable: true
+    }); 
+    kakao.maps.event.addListener(marker, 'click', function() {
+      alert(marker.getTitle()); 
+      marker.setMap(null); //alert 창이 나온 후 확인누르면 marker가 사라지도록 함
+    });
+    idx += 1;
+});
+
+</script>
+</body>
+</html>

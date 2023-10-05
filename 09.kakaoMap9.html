@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Kakao 지도 시작하기</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+body {margin: 0}    
+#map {
+    height: 100vh; /* viewport height */
+}    
+
+</style>
+</head>
+<body>
+
+<div id="map">
+    <ul class="zoom">
+        <li><i class="bi bi-plus-lg"></i></li>
+        <li><i class="bi bi-dash-lg"></i></li>
+    </ul>
+</div>
+
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a43eae193dd9a35ef28e4466d84ee1b"></script>
+<script>
+const container = document.querySelector('#map');
+let options = {
+    center: new kakao.maps.LatLng(37.558450, 127.048876),
+    level: 3
+};
+
+const map = new kakao.maps.Map(container, options);
+
+let linePath = [
+    new kakao.maps.LatLng(37.557450, 127.048876),
+    new kakao.maps.LatLng(37.558450, 127.046876),
+    new kakao.maps.LatLng(37.559450, 127.049376) 
+];
+
+// 지도에 표시할 선을 생성합니다
+let polyline = new kakao.maps.Polyline({
+    map: map,
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 5, // 선의 두께 입니다
+    strokeColor: '#FFAE00', // 선의 색깔입니다
+    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid' // 선의 스타일입니다
+});
+
+// 지도에 선을 표시합니다 
+polyline.setMap(map);  
+
+
+kakao.maps.event.addListener(map, 'click', function(evt) {        
+    
+});
+
+</script>
+</body>
+</html>
